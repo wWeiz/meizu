@@ -1,12 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta charset="utf-8"/>
+	<title></title>
+<style>
+.active{
+	background:yellow;
+}	
+#box div{
+	width:200px;
+	height:200px;
+	border: 1px solid #000;
+	display: none;
+}
+#box div.show{
+	display: block;
+}
+
+</style>
 </head>
 <body>
-	<div>
-		meizu官网!
-	</div>
+<input type="button" name="" id="" value="按钮一" class="active"/>
+<input type="button" name="" id="" value="按钮二" />	
+<input type="button" name="" id="" value="按钮三" />
+<div id="box">
+	<div class="show"></div>
+	<div></div>
+	<div></div>
+</div>
+<script src="jquery-1.11.1.js"></script>
+<script type="text/javascript">
+
+	/*
+		$.post('php/post.php',{'user':'leo'},function(data){
+			console.log(data)
+		}); 
+		$.get('php/get2.php?num='+index,function(str){
+				$('#box div').eq(index).text(str);
+			}
+		);
+	*/
+	$('input').on('click',function(){
+		$(this).addClass('active').siblings('input').removeClass('active');
+		$('#box div').eq($(this).index('input')).show().siblings().hide();
+		/*var _this = $(this);
+		setTimeout(function(){
+			fn1(_this.index('input'));
+		},1000);*/
+		fn1($(this).index());
+		
+	});
+	fn1(0);
+	function fn1(index){
+		$.ajax({
+			url:'php/get2.php',
+			data:{
+				num:index
+			},
+			success:function(data){
+				$('#box div').eq(index).text(data);
+			}
+		});
+	}
+	
+</script>
 </body>
 </html>
